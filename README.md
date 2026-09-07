@@ -1,4 +1,4 @@
-# Ledger — a simple personal expense tracker
+# Smart Wallet — a simple personal expense tracker
 
 A single-page app for logging expenses, setting monthly budgets per
 category, and seeing an alert when you're near or over a limit.
