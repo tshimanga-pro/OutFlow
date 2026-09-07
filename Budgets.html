@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budgets</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            background: linear-gradient(135deg, #eef4ff 0%, #f9fbff 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+        }
+
+        .budget-card {
+            width: 100%;
+            max-width: 760px;
+            background: white;
+            border-radius: 18px;
+            box-shadow: 0 18px 45px rgba(15, 23, 42, 0.12);
+            padding: 30px;
+        }
+
+        h2 {
+            margin: 0 0 10px;
+            color: #0f172a;
+            text-align: center;
+        }
+
+        .subtitle {
+            margin: 0 0 24px;
+            color: #475569;
+            text-align: center;
+            font-size: 15px;
+        }
+
+        .budget-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .budget-item {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .budget-item label {
+            font-size: 14px;
+            font-weight: 700;
+            color: #1f4ed8;
+        }
+
+        .budget-item .input-row {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .budget-item input,
+        .budget-item select,
+        .budget-item button {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 10px;
+            border: 1px solid #dbeafe;
+            font-size: 14px;
+        }
+
+        .budget-item input:focus,
+        .budget-item select:focus {
+            outline: none;
+            border-color: #1f4ed8;
+            box-shadow: 0 0 0 3px rgba(31, 78, 216, 0.12);
+        }
+
+        .currency {
+            width: 110px;
+            flex-shrink: 0;
+        }
+
+        .actions {
+            margin-top: 26px;
+            display: flex;
+            justify-content: center;
+        }
+
+        button {
+            background: linear-gradient(135deg, #1f4ed8, #2563eb);
+            color: white;
+            border: none;
+            font-weight: 700;
+            cursor: pointer;
+            border-radius: 10px;
+            padding: 12px 22px;
+            min-width: 180px;
+        }
+
+        @media (max-width: 700px) {
+            body {
+                padding: 16px;
+            }
+
+            .budget-card {
+                padding: 22px 16px;
+            }
+
+            .budget-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .budget-item .input-row {
+                flex-direction: column;
+            }
+
+            .currency {
+                width: 100%;
+            }
+
+            button {
+                width: 100%;
+                min-width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="budget-card">
+        <h2>Monthly Budget Limits</h2>
+        <p class="subtitle">Set a monthly limit per category. Leave blank for no limit.</p>
+
+        <form id="budgetForm">
+            <div class="budget-grid">
+                <div class="budget-item">
+                    <label for="foodLimit">Food</label>
+                    <div class="input-row">
+                        <input id="foodLimit" type="number" min="0" step="0.01" placeholder="Enter amount">
+                        <select class="currency" aria-label="Food currency">
+                            <option value="UGX">UGX</option>
+                            <option value="USD">USD</option>
+                            <option value="EUR">EUR</option>
+                            <option value="KES">KES</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="budget-item">
+                    <label for="transportLimit">Transport</label>
+                    <div class="input-row">
+                        <input id="transportLimit" type="number" min="0" step="0.01" placeholder="Enter amount">
+                        <select class="currency" aria-label="Transport currency">
+                            <option value="UGX">UGX</option>
+                            <option value="USD">USD</option>
+                            <option value="EUR">EUR</option>
+                            <option value="KES">KES</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="budget-item">
+                    <label for="rentLimit">Rent</label>
+                    <div class="input-row">
+                        <input id="rentLimit" type="number" min="0" step="0.01" placeholder="Enter amount">
+                        <select class="currency" aria-label="Rent currency">
+                            <option value="UGX">UGX</option>
+                            <option value="USD">USD</option>
+                            <option value="EUR">EUR</option>
+                            <option value="KES">KES</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="budget-item">
+                    <label for="utilityLimit">Utility</label>
+                    <div class="input-row">
+                        <input id="utilityLimit" type="number" min="0" step="0.01" placeholder="Enter amount">
+                        <select class="currency" aria-label="Utility currency">
+                            <option value="UGX">UGX</option>
+                            <option value="USD">USD</option>
+                            <option value="EUR">EUR</option>
+                            <option value="KES">KES</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="budget-item">
+                    <label for="healthcareLimit">Healthcare</label>
+                    <div class="input-row">
+                        <input id="healthcareLimit" type="number" min="0" step="0.01" placeholder="Enter amount">
+                        <select class="currency" aria-label="Healthcare currency">
+                            <option value="UGX">UGX</option>
+                            <option value="USD">USD</option>
+                            <option value="EUR">EUR</option>
+                            <option value="KES">KES</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="budget-item">
+                    <label for="entertainmentLimit">Entertainment</label>
+                    <div class="input-row">
+                        <input id="entertainmentLimit" type="number" min="0" step="0.01" placeholder="Enter amount">
+                        <select class="currency" aria-label="Entertainment currency">
+                            <option value="UGX">UGX</option>
+                            <option value="USD">USD</option>
+                            <option value="EUR">EUR</option>
+                            <option value="KES">KES</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="budget-item">
+                    <label for="shoppingLimit">Shopping</label>
+                    <div class="input-row">
+                        <input id="shoppingLimit" type="number" min="0" step="0.01" placeholder="Enter amount">
+                        <select class="currency" aria-label="Shopping currency">
+                            <option value="UGX">UGX</option>
+                            <option value="USD">USD</option>
+                            <option value="EUR">EUR</option>
+                            <option value="KES">KES</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="budget-item">
+                    <label for="otherLimit">Other</label>
+                    <div class="input-row">
+                        <input id="otherLimit" type="number" min="0" step="0.01" placeholder="Enter amount">
+                        <select class="currency" aria-label="Other currency">
+                            <option value="UGX">UGX</option>
+                            <option value="USD">USD</option>
+                            <option value="EUR">EUR</option>
+                            <option value="KES">KES</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="actions">
+                <button type="submit">Save Budget</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        const budgetForm = document.getElementById('budgetForm');
+
+        budgetForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const limits = {
+                Food: document.getElementById('foodLimit').value,
+                Transport: document.getElementById('transportLimit').value,
+                Rent: document.getElementById('rentLimit').value,
+                Utility: document.getElementById('utilityLimit').value,
+                Healthcare: document.getElementById('healthcareLimit').value,
+                Entertainment: document.getElementById('entertainmentLimit').value,
+                Shopping: document.getElementById('shoppingLimit').value,
+                Other: document.getElementById('otherLimit').value
+            };
+
+            console.log('Monthly budget limits:', limits);
+            alert('Monthly budget limits saved successfully!');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monthly Expense Summary</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            background: linear-gradient(135deg, #eef4ff 0%, #f9fbff 100%);
+            color: #0f172a;
+            min-height: 100vh;
+            padding: 24px;
+        }
+
+        .summary-container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 220px;
+        }
+
+        .brand-logo {
+            width: 52px;
+            height: 52px;
+            border-radius: 12px;
+            object-fit: cover;
+            border: 2px solid #dbeafe;
+            box-shadow: 0 8px 18px rgba(31, 78, 216, 0.12);
+        }
+
+        .brand-name {
+            font-size: clamp(1.1rem, 1.6vw, 1.6rem);
+            font-weight: 800;
+            color: #1f4ed8;
+            margin: 0;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: clamp(1.8rem, 3vw, 2.7rem);
+        }
+
+        .month-picker {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #fff;
+            border-radius: 12px;
+            padding: 10px 14px;
+            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+        }
+
+        .month-picker label {
+            font-weight: 700;
+            color: #1f4ed8;
+        }
+
+        .month-picker input {
+            border: 1px solid #dbeafe;
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 14px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 18px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 12px 25px rgba(15, 23, 42, 0.08);
+        }
+
+        .stat-label {
+            font-size: 0.82rem;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .stat-value {
+            font-size: clamp(1.4rem, 2vw, 2rem);
+            font-weight: 800;
+            color: #0f172a;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 24px;
+        }
+
+        .panel {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 12px 25px rgba(15, 23, 42, 0.08);
+            padding: 20px;
+        }
+
+        .panel h3 {
+            margin: 0 0 16px;
+            font-size: 1.1rem;
+        }
+
+        .expense-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .expense-row {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr 1fr 0.8fr;
+            gap: 12px;
+            padding: 12px 14px;
+            border-radius: 10px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            align-items: center;
+        }
+
+        .expense-row.header {
+            background: #eff6ff;
+            font-weight: 700;
+            color: #1f4ed8;
+        }
+
+        .category-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .category-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 12px;
+            border-radius: 10px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+        }
+
+        .category-name {
+            font-weight: 600;
+        }
+
+        .category-amount {
+            font-weight: 700;
+            color: #1f4ed8;
+        }
+
+        @media (max-width: 900px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 16px;
+            }
+
+            .topbar {
+                align-items: flex-start;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .expense-row {
+                grid-template-columns: 1fr;
+            }
+
+            .expense-row.header {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="summary-container">
+        <div class="topbar">
+            <div class="brand">
+                <img class="brand-logo" src="/images/Wallet1-2292428_1920.jpg" alt="Smart Wallet Logo">
+                <p class="brand-name">Smart Wallet</p>
+            </div>
+            <div class="month-picker">
+                <label for="monthInput">Month</label>
+                <input id="monthInput" type="month">
+            </div>
+        </div>
+
+        <h3>Monthly Expense Summary</h3>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">Total Spent</div>
+                <div class="stat-value" id="totalSpent">UGX 0.00</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Average / Day</div>
+                <div class="stat-value" id="averageDay">UGX 0.00</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Highest Category</div>
+                <div class="stat-value" id="highestCategory">-</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Transactions</div>
+                <div class="stat-value" id="transactionCount">0</div>
+            </div>
+        </div>
+
+        <div class="content-grid">
+            <div class="panel">
+                <h3>Monthly Expense Details</h3>
+                <div class="expense-list" id="expenseList"></div>
+            </div>
+
+            <div class="panel">
+                <h3>Category Summary</h3>
+                <div class="category-list" id="categoryList"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const monthInput = document.getElementById('monthInput');
+        const expenseList = document.getElementById('expenseList');
+        const categoryList = document.getElementById('categoryList');
+        const totalSpentEl = document.getElementById('totalSpent');
+        const averageDayEl = document.getElementById('averageDay');
+        const highestCategoryEl = document.getElementById('highestCategory');
+        const transactionCountEl = document.getElementById('transactionCount');
+
+        function getMonthLabel(dateValue) {
+            if (!dateValue) return 'Current Month';
+            const [year, month] = dateValue.split('-');
+            const date = new Date(Number(year), Number(month) - 1, 1);
+            return date.toLocaleString('en-US', { month: 'long', year: 'numeric' });
+        }
+
+        function formatMoney(value, currency = 'UGX') {
+            return `${new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(value)} ${currency}`;
+        }
+
+        function getMonthTransactions() {
+            const stored = JSON.parse(localStorage.getItem('expenseTransactions') || '[]');
+            const selectedMonth = monthInput.value || new Date().toISOString().slice(0, 7);
+
+            return stored.filter(entry => {
+                if (!entry.date) return false;
+                return entry.date.startsWith(selectedMonth);
+            });
+        }
+
+        function renderSummary() {
+            const monthTransactions = getMonthTransactions();
+            const total = monthTransactions.reduce((sum, entry) => sum + Number(entry.amount || 0), 0);
+            const transactionCount = monthTransactions.length;
+            const daysInMonth = new Date(
+                Number(monthInput.value.split('-')[0]),
+                Number(monthInput.value.split('-')[1]),
+                0
+            ).getDate();
+            const averagePerDay = transactionCount ? total / daysInMonth : 0;
+
+            const categoryTotals = {};
+            monthTransactions.forEach(entry => {
+                const key = entry.category || 'Other';
+                categoryTotals[key] = (categoryTotals[key] || 0) + Number(entry.amount || 0);
+            });
+
+            const highestCategory = Object.keys(categoryTotals).length
+                ? Object.entries(categoryTotals).sort((a, b) => b[1] - a[1])[0]
+                : null;
+
+            totalSpentEl.textContent = formatMoney(total, monthTransactions[0]?.currency || 'UGX');
+            averageDayEl.textContent = formatMoney(averagePerDay, monthTransactions[0]?.currency || 'UGX');
+            highestCategoryEl.textContent = highestCategory ? highestCategory[0] : '-';
+            transactionCountEl.textContent = transactionCount;
+
+            expenseList.innerHTML = '';
+            const headerRow = document.createElement('div');
+            headerRow.className = 'expense-row header';
+            headerRow.innerHTML = '<span>Date</span><span>Category</span><span>Reason</span><span>Amount</span>';
+            expenseList.appendChild(headerRow);
+
+            if (!monthTransactions.length) {
+                const empty = document.createElement('div');
+                empty.className = 'expense-row';
+                empty.innerHTML = '<span colspan="4">No expense data for this month.</span>';
+                expenseList.appendChild(empty);
+                return;
+            }
+
+            monthTransactions
+                .slice()
+                .sort((a, b) => new Date(b.date) - new Date(a.date))
+                .forEach(entry => {
+                    const row = document.createElement('div');
+                    row.className = 'expense-row';
+                    row.innerHTML = `
+                        <span>${entry.date}</span>
+                        <span>${entry.category || 'Other'}</span>
+                        <span>${entry.reason || 'No reason'}</span>
+                        <span>${formatMoney(Number(entry.amount || 0), entry.currency || 'UGX')}</span>
+                    `;
+                    expenseList.appendChild(row);
+                });
+
+            categoryList.innerHTML = '';
+            if (!Object.keys(categoryTotals).length) {
+                categoryList.innerHTML = '<div class="category-item"><span class="category-name">No data</span><span class="category-amount">UGX 0.00</span></div>';
+                return;
+            }
+
+            Object.entries(categoryTotals)
+                .sort((a, b) => b[1] - a[1])
+                .forEach(([name, value]) => {
+                    const item = document.createElement('div');
+                    item.className = 'category-item';
+                    item.innerHTML = `
+                        <span class="category-name">${name}</span>
+                        <span class="category-amount">${formatMoney(value, monthTransactions[0]?.currency || 'UGX')}</span>
+                    `;
+                    categoryList.appendChild(item);
+                });
+        }
+
+        const today = new Date();
+        const defaultMonth = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}`;
+        monthInput.value = defaultMonth;
+
+        monthInput.addEventListener('change', renderSummary);
+        renderSummary();
+    </script>
+</body>
+</html>

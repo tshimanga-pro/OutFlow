@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Smart Wallet</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.css">
+    <style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.page-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  max-width: 1000px;
+  width: 100%;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+
+/* ============= LEFT SECTION: COMPANY BRANDING ============= */
+.branding-section {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 60px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.branding-section::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -10%;
+  width: 400px;
+  height: 400px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+}
+
+.branding-section::after {
+  content: '';
+  position: absolute;
+  bottom: -30%;
+  left: -5%;
+  width: 300px;
+  height: 300px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 50%;
+}
+
+.branding-content {
+  position: relative;
+  z-index: 1;
+}
+
+.company-logo-img {
+  width: 140px;
+  height: 140px;
+  border-radius: 20px;
+  object-fit: cover;
+  margin-bottom: 25px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  border: 4px solid white;
+}
+
+.company-title {
+  font-size: 32px;
+  font-weight: 800;
+  margin-bottom: 15px;
+  letter-spacing: -0.5px;
+}
+
+.company-tagline {
+  font-size: 16px;
+  opacity: 0.95;
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+.branding-features {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.feature {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.feature-icon {
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+/* ============= RIGHT SECTION: REGISTRATION FORM ============= */
+.form-section {
+  padding: 60px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.form-header {
+  margin-bottom: 40px;
+}
+
+.form-header h2 {
+  font-size: 28px;
+  color: #333;
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+
+.form-header p {
+  font-size: 14px;
+  color: #999;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.error-message {
+  display: none;
+  color: #c0392b;
+  font-size: 13px;
+  margin-top: 8px;
+  font-weight: 500;
+  padding: 10px 12px;
+  background: #fadbd8;
+  border-left: 4px solid #e74c3c;
+  border-radius: 4px;
+}
+
+.error-message.show {
+  display: block;
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.form-group input.error,
+.form-group .password-wrapper input.error {
+  border-color: #e74c3c !important;
+  background: #fadbd8 !important;
+}
+
+.form-group.error input,
+.form-group.error .iti--allow-dropdown input {
+  border-color: #e74c3c;
+  background: #fadbd8;
+}
+
+.phone-input-wrapper input.error,
+.iti--allow-dropdown input.error {
+  border-color: #e74c3c !important;
+  background: #fadbd8 !important;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: #667eea;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="tel"],
+.iti--allow-dropdown input {
+  width: 100%;
+  padding: 12px 15px;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  font-size: 14px;
+  font-family: inherit;
+  transition: all 0.3s ease;
+  background: #f8f9fa;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="tel"]:focus,
+.iti--allow-dropdown input:focus {
+  outline: none;
+  background: white;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.phone-input-wrapper {
+  position: relative;
+}
+
+.iti {
+  width: 100%;
+}
+
+.iti--allow-dropdown input {
+  padding-left: 50px;
+  width: 100%;
+}
+
+.password-wrapper {
+  position: relative;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #667eea;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 35px;
+  transition: color 0.3s ease;
+}
+
+.toggle-password:hover {
+  color: #764ba2;
+}
+
+.btn-register {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 15px;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.btn-register:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.btn-register:active {
+  transform: translateY(0);
+}
+
+.login-link {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+  color: #666;
+}
+
+.login-link a {
+  color: #667eea;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.login-link a:hover {
+  color: #764ba2;
+  text-decoration: underline;
+}
+
+/* ============= RESPONSIVE DESIGN ============= */
+@media (max-width: 768px) {
+  .container {
+    grid-template-columns: 1fr;
+  }
+
+  .branding-section {
+    padding: 40px 30px;
+    min-height: 300px;
+  }
+
+  .form-section {
+    padding: 40px 30px;
+  }
+
+  .company-logo-img {
+    width: 100px;
+    height: 100px;
+  }
+
+  .company-title {
+    font-size: 24px;
+  }
+
+  .form-header h2 {
+    font-size: 24px;
+  }
+
+  .branding-features {
+    gap: 15px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    border-radius: 15px;
+  }
+
+  .branding-section,
+  .form-section {
+    padding: 30px 20px;
+  }
+
+  .company-logo-img {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 15px;
+  }
+
+  .company-title {
+    font-size: 20px;
+  }
+
+  .company-tagline {
+    font-size: 14px;
+  }
+
+  .form-header h2 {
+    font-size: 20px;
+  }
+
+  .form-header p {
+    font-size: 12px;
+  }
+
+  label {
+    font-size: 12px;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="tel"],
+  .iti--allow-dropdown input {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+
+  .feature {
+    font-size: 13px;
+  }
+
+  .feature-icon {
+    width: 35px;
+    height: 35px;
+    font-size: 16px;
+  }
+}
+
+/* ============= FOOTER ============= */
+footer {
+  background: linear-gradient(135deg, #2d3561 0%, #1a1f3a 100%);
+  color: white;
+  padding: 40px 20px;
+  text-align: center;
+  width: 100%;
+  margin-top: 40px;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-text {
+  font-size: 14px;
+  margin-bottom: 15px;
+  opacity: 0.9;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin: 20px 0;
+  flex-wrap: wrap;
+}
+
+.footer-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+  transition: opacity 0.3s ease;
+  opacity: 0.8;
+}
+
+.footer-links a:hover {
+  opacity: 1;
+}
+
+.footer-copyright {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 20px;
+  margin-top: 20px;
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+@media (max-width: 768px) {
+  footer {
+    margin-top: 30px;
+  }
+
+  .footer-links {
+    gap: 15px;
+  }
+}
+    </style>
+</head>
+<body>
+    <div class="page-wrapper">
+        <div class="container">
+        <!-- LEFT SECTION: COMPANY BRANDING -->
+        <div class="branding-section">
+            <div class="branding-content">
+                <img src="publics/images/Wallet1-2292428_1920.jpg" alt="Smart Wallet Logo" class="company-logo-img">
+                <h1 class="company-title">Smart Wallet</h1>
+                <p class="company-tagline">Revolutionizing personal finance with cutting-edge technology and user-centric design.</p>
+                
+                <div class="branding-features">
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <span>Bank-Level Security</span>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-lightning-bolt"></i>
+                        </div>
+                        <span>Lightning Fast Transactions</span>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <span>Smart Analytics & Insights</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT SECTION: REGISTRATION FORM -->
+        <div class="form-section">
+            <div class="form-header">
+                <h2>Create Account</h2>
+                <p>Join thousands of users managing their finances smarter</p>
+            </div>
+
+            <form id="registrationForm" novalidate>
+                <!-- First Name & Surname Row -->
+                <div class="form-row">
+                    <div class="form-group" id="firstNameGroup">
+                        <label for="firstName">First Name</label>
+                        <input type="text" id="firstName" name="firstName" placeholder="Enter your first name" required />
+                        <div class="error-message" id="firstNameError"></div>
+                    </div>
+                    <div class="form-group" id="surnameGroup">
+                        <label for="surname">Surname</label>
+                        <input type="text" id="surname" name="surname" placeholder="Enter your surname" required />
+                        <div class="error-message" id="surnameError"></div>
+                    </div>
+                </div>
+
+                <!-- Email Address -->
+                <div class="form-group" id="emailGroup">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" placeholder="your.email@example.com" required />
+                    <div class="error-message" id="emailError"></div>
+                </div>
+
+                <!-- Phone Number with Country Code -->
+                <div class="form-group" id="phoneGroup">
+                    <label for="phone">Contact Number</label>
+                    <div class="phone-input-wrapper">
+                        <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required />
+                    </div>
+                    <div class="error-message" id="phoneError"></div>
+                </div>
+
+                <!-- Password -->
+                <div class="form-group" id="passwordGroup">
+                    <label for="password">Password</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="password" name="password" placeholder="Create a strong password" required />
+                        <button type="button" class="toggle-password" id="togglePassword">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <div class="error-message" id="passwordError"></div>
+                </div>
+
+                <!-- Register Button -->
+                <button type="submit" class="btn-register">Create Account</button>
+
+                <!-- Login Link -->
+                <div class="login-link">
+                    Already have an account? <a href="Login.html">Login here</a>
+                </div>
+            </form>
+        </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-content">
+            <p class="footer-text">Empowering your financial journey, one transaction at a time.</p>
+            <div class="footer-links">
+                <a href="Home.html">Home</a>
+                <a href="aboutus.html">About Us</a>
+                <a href="contactus.html">Contact Us</a>
+                <a href="PrivacyPolicy.html">Privacy Policy</a>
+                <a href="TermsConditions.html">Terms & Conditions</a>
+            </div>
+            <div class="footer-copyright">
+          <p>© 2026 Smart Wallet. All Rights Reserved | Designed with <i class="fas fa-heart" style="color: #ff6b6b;"></i> for Modern Finance</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
+    <script src="script.js"></script>
+    <script>
+        // Initialize International Telephone Input
+        const phoneInput = document.querySelector("#phone");
+        const iti = window.intlTelInput(phoneInput, {
+            initialCountry: "ug",
+            preferredCountries: ["ug", "us", "gb", "ke"],
+            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js"
+        });
+
+        // Store ITI instance in window for form validation
+        window.itiInstance = iti;
+    </script>
+</body>
+</html>

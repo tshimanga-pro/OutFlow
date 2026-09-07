@@ -1,0 +1,318 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  title Administrator Dashboard
+  style.
+    :root {
+    --primary: #1f4ed8;
+    --primary-soft: #eaf1ff;
+    --danger: #dc2626;
+    --danger-soft: #fee2e2;
+    --success: #16a34a;
+    --success-soft: #dcfce7;
+    --bg: #eef4ff;
+    --card: #ffffff;
+    --text: #0f172a;
+    --muted: #475569;
+    --line: #dfeafc;
+    }
+    * {
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    }
+    body {
+    margin: 0;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #eef4ff 0%, #f9fbff 100%);
+    color: var(--text);
+    padding: 24px;
+    }
+    .dashboard {
+    max-width: 1100px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    padding: 28px;
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+    }
+    .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 22px;
+    flex-wrap: wrap;
+    }
+    .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-right: auto;
+    }
+    .brand img {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    object-fit: cover;
+    border: 2px solid var(--line);
+    box-shadow: 0 10px 20px rgba(31, 78, 216, 0.12);
+    }
+    .brand-name {
+    margin: 0;
+    font-size: clamp(1.2rem, 2vw, 1.6rem);
+    font-weight: 800;
+    color: var(--primary);
+    }
+    .header h2 {
+    margin: 0;
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    }
+    .header p {
+    margin: 6px 0 0;
+    color: var(--muted);
+    font-size: 0.98rem;
+    }
+    .toolbar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    }
+    .welcome {
+    margin-top: 12px;
+    background: var(--primary-soft);
+    border: 1px solid var(--line);
+    padding: 12px 16px;
+    border-radius: 12px;
+    color: var(--primary);
+    font-weight: 700;
+    }
+    .welcome p { margin: 0; }
+    .sub-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0 18px;
+    }
+    .welcome-inline {
+    background: var(--primary-soft);
+    color: var(--primary);
+    padding: 8px 12px;
+    border-radius: 10px;
+    font-weight: 700;
+    }
+    .badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--primary-soft);
+    color: var(--primary);
+    border-radius: 999px;
+    padding: 10px 16px;
+    font-weight: 700;
+    }
+    .toolbar-btn {
+    border: none;
+    border-radius: 10px;
+    padding: 10px 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+    .toolbar-btn:hover {
+    transform: translateY(-1px);
+    opacity: 0.97;
+    }
+    .btn-logout {
+    background: #111827;
+    color: white;
+    }
+    .btn-print {
+    background: #f59e0b;
+    color: #fff;
+    }
+    .table-wrap {
+    overflow-x: auto;
+    border-radius: 18px;
+    border: 1px solid var(--line);
+    background: var(--card);
+    }
+    table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 760px;
+    }
+    thead {
+    background: #f8fbff;
+    }
+    th, td {
+    text-align: left;
+    padding: 16px 18px;
+    border-bottom: 1px solid #eaf1ff;
+    font-size: 0.96rem;
+    }
+    th {
+    color: var(--primary);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-size: 0.75rem;
+    }
+    tbody tr:hover {
+    background: #f8fbff;
+    }
+    .actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    }
+    .btn {
+    border: none;
+    border-radius: 10px;
+    padding: 9px 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+    .btn:hover {
+    transform: translateY(-1px);
+    opacity: 0.96;
+    }
+    .btn-edit {
+    background: var(--success-soft);
+    color: var(--success);
+    }
+    .btn-delete {
+    background: var(--danger-soft);
+    color: var(--danger);
+    }
+    @media (max-width: 768px) {
+    body {
+    padding: 16px;
+    }
+    .dashboard {
+    padding: 18px;
+    }
+    .header {
+    align-items: flex-start;
+    }
+    .toolbar {
+    width: 100%;
+    justify-content: flex-start;
+    }
+    .toolbar-btn {
+    flex: 1 1 140px;
+    }
+    }
+    @media (max-width: 480px) {
+    .dashboard {
+    padding: 14px;
+    border-radius: 16px;
+    }
+    .header h2 {
+    font-size: 1.5rem;
+    }
+    .header p {
+    font-size: 0.9rem;
+    }
+    .toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    }
+    .badge,
+    .toolbar-btn {
+    width: 100%;
+    justify-content: center;
+    }
+    .table-wrap {
+    overflow: visible;
+    border: none;
+    background: transparent;
+    }
+    table,
+    thead,
+    tbody,
+    th,
+    td,
+    tr {
+    display: block;
+    width: 100%;
+    }
+    thead {
+    display: none;
+    }
+    tbody {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    }
+    tbody tr {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 14px;
+    box-shadow: 0 8px 18px rgba(15, 23, 42, 0.04);
+    }
+    tbody tr:hover {
+    background: #fff;
+    }
+    td {
+    border: none;
+    padding: 8px 0;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 0.95rem;
+    }
+    td::before {
+    content: attr(data-label);
+    font-weight: 700;
+    color: var(--primary);
+    min-width: 110px;
+    }
+    .actions {
+    justify-content: flex-end;
+    margin-top: 12px;
+    }
+    }
+.dashboard
+  .header
+    .brand
+      img(src='/images/Wallet1-2292428_1920.jpg' alt='Smart Wallet logo')
+      p.brand-name Smart Wallet
+    .toolbar
+      .badge Admin Panel
+      button.toolbar-btn.btn-print(type='button' onclick='window.print()') Print
+      button.toolbar-btn.btn-logout(type='button' onclick="window.location.href='/admin/logout'") Logout
+    
+  .sub-header
+    h3 Registered Subscribers
+    if adminFirstName
+      p.welcome-inline Welcome back, #{adminFirstName}!
+  p Manage system users and account details.
+  .table-wrap
+    table
+      thead
+        tr
+          th First Name
+          th Surname
+          th Email
+          th Telephone
+          th Actions
+      tbody
+        if admins && admins.length
+          each admin in admins
+            tr
+              td(data-label='First Name')= admin.firstName
+              td(data-label='Surname')= admin.surname
+              td(data-label='Email')= admin.email
+              td(data-label='Telephone')= admin.telephone || '-'
+              td(data-label='Actions')
+                .actions
+                  button.btn.btn-edit(type='button' onclick=`window.location.href='/admin/edit/${admin._id}'`) Edit
+                  button.btn.btn-delete(type='button' onclick=`window.location.href='/admin/delete/${admin._id}'`) Delete
+        else
+          tr
+            td(colspan='5') No admin records found.

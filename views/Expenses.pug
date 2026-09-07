@@ -1,0 +1,292 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  title Expense Tracker
+  style.
+    * {
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    }
+    body {
+    margin: 0;
+    background: linear-gradient(135deg, #eef4ff 0%, #f9fbff 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    }
+    .expense-card {
+    width: 100%;
+    max-width: 680px;
+    background: #ffffff;
+    border-radius: 18px;
+    box-shadow: 0 18px 45px rgba(15, 23, 42, 0.12);
+    padding: 30px;
+    }
+    .header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    }
+    h2 {
+    margin: 0;
+    color: #0f172a;
+    text-align: left;
+    flex: 1;
+    }
+    .calendar-box {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+    }
+    .calendar-label {
+    font-size: 12px;
+    color: #475569;
+    font-weight: 700;
+    text-transform: uppercase;
+    }
+    .form-group {
+    margin-bottom: 18px;
+    }
+    label {
+    display: block;
+    margin-bottom: 8px;
+    color: #1f4ed8;
+    font-weight: 700;
+    font-size: 14px;
+    }
+    .input-row {
+    display: flex;
+    gap: 12px;
+    }
+    input, select, textarea, button {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid #dbeafe;
+    font-size: 15px;
+    }
+    input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: #1f4ed8;
+    box-shadow: 0 0 0 3px rgba(31, 78, 216, 0.12);
+    }
+    .currency {
+    width: 120px;
+    flex-shrink: 0;
+    }
+    textarea {
+    min-height: 100px;
+    resize: vertical;
+    }
+    button {
+    background: linear-gradient(135deg, #1f4ed8, #2563eb);
+    color: white;
+    border: none;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    }
+    button:hover {
+    transform: translateY(-1px);
+    }
+    .error-message {
+    display: none;
+    color: #b91c1c;
+    background: #fee2e2;
+    border-left: 4px solid #dc2626;
+    padding: 12px 14px;
+    border-radius: 8px;
+    margin-bottom: 18px;
+    font-weight: 700;
+    }
+    .error-message.show {
+    display: block;
+    }
+    .success-message {
+    display: none;
+    color: #166534;
+    background: #dcfce7;
+    border-left: 4px solid #16a34a;
+    padding: 12px 14px;
+    border-radius: 8px;
+    margin-bottom: 18px;
+    font-weight: 700;
+    }
+    .success-message.show {
+    display: block;
+    }
+    .total-box {
+    margin-top: 20px;
+    padding: 16px 18px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 700;
+    color: #0f172a;
+    gap: 12px;
+    }
+    @media (max-width: 768px) {
+    body {
+    padding: 16px;
+    }
+    .expense-card {
+    padding: 24px 18px;
+    }
+    .header-row {
+    flex-direction: column;
+    align-items: flex-start;
+    }
+    .calendar-box {
+    align-items: flex-start;
+    width: 100%;
+    }
+    .calendar-box input {
+    width: 100%;
+    }
+    }
+    @media (max-width: 520px) {
+    .input-row {
+    flex-direction: column;
+    }
+    .currency {
+    width: 100%;
+    }
+    .total-box {
+    flex-direction: column;
+    align-items: flex-start;
+    }
+    }
+.expense-card
+  .header-row
+    h2 Add Expense
+    .calendar-box
+      span.calendar-label Review date
+      input#reviewDate(type='date' aria-label='Choose date')
+  if error
+    .error-message.show= error
+  if success
+    .success-message.show= success
+  form#expenseForm(action='/expensetracker' method='post' novalidate='')
+    .form-group
+      label(for='amount') Amount
+      .input-row
+        input#amount(name='amount' type='number' step='0.01' min='0' placeholder='Enter amount' required='')
+        select#currency.currency(name='currency' aria-label='Currency')
+          option(value='UGX') UGX
+          option(value='USD') USD
+          option(value='EUR') EUR
+          option(value='KES') KES
+    .form-group
+      label(for='category') Category
+      select#category(name='category' required='')
+        option(value='') Select category
+        option(value='Food') Food
+        option(value='Transport') Transport
+        option(value='Rent') Rent
+        option(value='Utility') Utility
+        option(value='Healthcare') Healthcare
+        option(value='Entertainment') Entertainment
+        option(value='Shopping') Shopping
+        option(value='Other') Other
+    .form-group
+      label(for='date') Date
+      input#date(type='date' name='date' required='')
+    .form-group
+      label(for='reason') Reason (optional)
+      textarea#reason(name='reason' placeholder='Add a short note...')
+    button(type='submit') Submit
+  .total-box
+    span Cumulative Total for the Day
+    span#totalAmount #{dailyTotal ? dailyTotal.toFixed(2) : '0.00'} #{dailyCurrency || 'UGX'}
+  script.
+    const budgetLimits = !{JSON.stringify(budgetLimits || {})};
+    const selectedDate = '!{selectedDate || new Date().toISOString().split("T")[0]}';
+    const form = document.getElementById('expenseForm');
+    const amountInput = document.getElementById('amount');
+    const categorySelect = document.getElementById('category');
+    const reviewDateInput = document.getElementById('reviewDate');
+    const dateInput = document.getElementById('date');
+    const errorBox = document.querySelector('.error-message');
+    const successBox = document.querySelector('.success-message');
+
+    reviewDateInput.value = selectedDate;
+    dateInput.value = selectedDate;
+
+    async function fetchDailyTotal(date) {
+      try {
+        const resp = await fetch('/expensetracker/total?date=' + encodeURIComponent(date), { headers: { Accept: 'application/json' } });
+        if (!resp.ok) return;
+        const data = await resp.json();
+        const amountEl = document.getElementById('totalAmount');
+        if (!amountEl) return;
+        const total = (data.dailyTotal || 0).toFixed ? (data.dailyTotal).toFixed(2) : Number(data.dailyTotal || 0).toFixed(2);
+        amountEl.textContent = total + ' ' + (data.dailyCurrency || 'UGX');
+      } catch (err) {
+        console.error('Failed fetching daily total', err);
+      }
+    }
+
+    reviewDateInput.addEventListener('change', function () {
+      const chosenDate = reviewDateInput.value;
+      if (chosenDate) {
+        dateInput.value = chosenDate;
+        fetchDailyTotal(chosenDate);
+      }
+    });
+
+    // initial fetch
+    if (selectedDate) fetchDailyTotal(selectedDate);
+
+    function showError(message) {
+      if (errorBox) {
+        errorBox.textContent = message;
+        errorBox.classList.add('show');
+      }
+      if (successBox) successBox.classList.remove('show');
+    }
+
+    function clearMessages() {
+      if (errorBox) errorBox.classList.remove('show');
+      if (successBox) successBox.classList.remove('show');
+    }
+
+    form.addEventListener('submit', function (event) {
+      const amount = Number(amountInput.value);
+      const category = categorySelect.value;
+
+      clearMessages();
+
+      if (amount === undefined || amount === null || amount === '' || Number.isNaN(amount) || amount < 0) {
+        event.preventDefault();
+        showError('Amount is required and cannot be negative.');
+        return;
+      }
+
+      if (!category) {
+        event.preventDefault();
+        showError('Please select a category.');
+        return;
+      }
+
+      const limit = Number(budgetLimits[category]);
+
+      if (budgetLimits[category] !== undefined && (!limit || limit <= 0)) {
+        event.preventDefault();
+        showError('Set a valid limit for this category before recording the expense.');
+        return;
+      }
+
+      if (budgetLimits[category] !== undefined && amount >= limit) {
+        event.preventDefault();
+        showError(`Expense amount must be lower than your ${category} limit (${limit}).`);
+      }
+    });

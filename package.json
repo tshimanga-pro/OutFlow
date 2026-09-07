@@ -1,0 +1,33 @@
+{
+  "name": "outflow",
+  "version": "1.0.0",
+  "description": "Financial Tracker",
+  "keywords": [
+    "Financial",
+    "Tracker"
+  ],
+  "license": "ISC",
+  "author": "Alpha Kumenda Tshimanga",
+  "type": "commonjs",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "gen:favicon": "convert images/Wallet1-2292428_1920.jpg -resize 32x32 public/images/favicon-32.png"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "imageMagick": "^0.1.2",
+    "mongoose": "^9.9.1",
+    "multer": "^2.2.0",
+    "passport": "^0.7.0",
+    "passport-local-mongoose": "^9.0.1",
+    "pug": "^3.0.4"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}

@@ -1,0 +1,646 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  title About Us - Smart Wallet
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css')
+  style.
+    * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    }
+    body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f8f9fa;
+    color: #333;
+    line-height: 1.6;
+    }
+    /* ============= HERO SECTION ============= */
+    .hero-section {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 100px 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    }
+    .hero-section::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 500px;
+    height: 500px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 50%;
+    }
+    .hero-section::after {
+    content: '';
+    position: absolute;
+    bottom: -30%;
+    left: -5%;
+    width: 400px;
+    height: 400px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 50%;
+    }
+    .hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+    }
+    .hero-section h1 {
+    font-size: 56px;
+    margin-bottom: 20px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    }
+    .hero-section p {
+    font-size: 20px;
+    opacity: 0.95;
+    line-height: 1.8;
+    }
+    /* ============= COMPANY STORY SECTION ============= */
+    .story-section {
+    padding: 80px 20px;
+    background: white;
+    }
+    .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    }
+    .section-title {
+    text-align: center;
+    font-size: 42px;
+    color: #667eea;
+    margin-bottom: 50px;
+    font-weight: 700;
+    }
+    .story-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    align-items: center;
+    }
+    .story-content h3 {
+    font-size: 28px;
+    color: #667eea;
+    margin-bottom: 20px;
+    font-weight: 700;
+    }
+    .story-content p {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 15px;
+    line-height: 1.8;
+    }
+    .story-image {
+    width: 100%;
+    height: 400px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 120px;
+    }
+    .story-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    }
+    /* ============= MISSION & VISION SECTION ============= */
+    .mission-section {
+    padding: 80px 20px;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e8eef7 100%);
+    }
+    .mission-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 30px;
+    }
+    .mission-card {
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .mission-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.2);
+    }
+    .mission-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    color: white;
+    font-size: 40px;
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+    }
+    .mission-card h3 {
+    font-size: 22px;
+    color: #667eea;
+    margin-bottom: 15px;
+    font-weight: 700;
+    }
+    .mission-card p {
+    color: #666;
+    font-size: 15px;
+    line-height: 1.7;
+    }
+    /* ============= TEAM SECTION ============= */
+    .team-section {
+    padding: 80px 20px;
+    background: white;
+    }
+    .team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 35px;
+    }
+    .team-member {
+    text-align: center;
+    background: #f8f9fa;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .team-member:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.2);
+    }
+    .team-image {
+    width: 100%;
+    height: 280px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 80px;
+    overflow: hidden;
+    }
+    .team-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    }
+    .team-info {
+    padding: 25px;
+    }
+    .team-info h4 {
+    font-size: 20px;
+    color: #667eea;
+    margin-bottom: 8px;
+    font-weight: 700;
+    }
+    .team-position {
+    color: #999;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    }
+    .team-description {
+    color: #666;
+    font-size: 14px;
+    line-height: 1.6;
+    }
+    .team-social {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 15px;
+    }
+    .team-social a {
+    width: 35px;
+    height: 35px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-decoration: none;
+    transition: transform 0.3s ease;
+    }
+    .team-social a:hover {
+    transform: scale(1.1);
+    }
+    /* ============= WHY CHOOSE US SECTION ============= */
+    .why-section {
+    padding: 80px 20px;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e8eef7 100%);
+    }
+    .why-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    align-items: center;
+    }
+    .why-image {
+    width: 100%;
+    height: 450px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 120px;
+    overflow: hidden;
+    }
+    .why-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    }
+    .why-content h3 {
+    font-size: 28px;
+    color: #667eea;
+    margin-bottom: 30px;
+    font-weight: 700;
+    }
+    .why-item {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 25px;
+    }
+    .why-check {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 24px;
+    flex-shrink: 0;
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+    }
+    .why-text h4 {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 8px;
+    font-weight: 600;
+    }
+    .why-text p {
+    color: #666;
+    font-size: 15px;
+    line-height: 1.6;
+    }
+    /* ============= STATISTICS SECTION ============= */
+    .stats-section {
+    padding: 80px 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    }
+    .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 40px;
+    text-align: center;
+    }
+    .stat-item h3 {
+    font-size: 48px;
+    font-weight: 800;
+    margin-bottom: 10px;
+    }
+    .stat-item p {
+    font-size: 18px;
+    opacity: 0.9;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    }
+    /* ============= CTA SECTION ============= */
+    .cta-section {
+    padding: 80px 20px;
+    background: white;
+    text-align: center;
+    }
+    .cta-content {
+    max-width: 700px;
+    margin: 0 auto;
+    }
+    .cta-section h2 {
+    font-size: 42px;
+    color: #667eea;
+    margin-bottom: 20px;
+    font-weight: 700;
+    }
+    .cta-section p {
+    font-size: 18px;
+    color: #666;
+    margin-bottom: 30px;
+    line-height: 1.8;
+    }
+    .cta-button {
+    display: inline-block;
+    padding: 15px 50px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    }
+    .cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    }
+    /* ============= FOOTER ============= */
+    footer {
+    background: linear-gradient(135deg, #2d3561 0%, #1a1f3a 100%);
+    color: white;
+    padding: 40px 20px;
+    text-align: center;
+    }
+    .footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    }
+    .footer-text {
+    font-size: 14px;
+    margin-bottom: 15px;
+    opacity: 0.9;
+    }
+    .footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+    }
+    .footer-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+    transition: opacity 0.3s ease;
+    opacity: 0.8;
+    }
+    .footer-links a:hover {
+    opacity: 1;
+    }
+    .footer-copyright {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 20px;
+    margin-top: 20px;
+    font-size: 12px;
+    opacity: 0.8;
+    }
+    /* ============= RESPONSIVE DESIGN ============= */
+    @media (max-width: 768px) {
+    .hero-section h1 {
+    font-size: 36px;
+    }
+    .story-grid,
+    .mission-grid,
+    .why-grid {
+    grid-template-columns: 1fr;
+    }
+    .hero-section p {
+    font-size: 16px;
+    }
+    .section-title {
+    font-size: 28px;
+    margin-bottom: 30px;
+    }
+    .story-image,
+    .why-image {
+    height: 300px;
+    }
+    .stats-grid {
+    gap: 25px;
+    }
+    .stat-item h3 {
+    font-size: 36px;
+    }
+    .team-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+    .footer-links {
+    gap: 15px;
+    }
+    }
+    @media (max-width: 480px) {
+    .hero-section h1 {
+    font-size: 28px;
+    }
+    .hero-section p {
+    font-size: 14px;
+    }
+    .section-title {
+    font-size: 24px;
+    }
+    .story-grid,
+    .mission-grid,
+    .why-grid {
+    gap: 25px;
+    }
+    .story-content h3,
+    .why-content h3 {
+    font-size: 22px;
+    }
+    .mission-grid {
+    grid-template-columns: 1fr;
+    }
+    .team-grid {
+    grid-template-columns: 1fr;
+    }
+    .stat-item h3 {
+    font-size: 28px;
+    }
+    .cta-section h2 {
+    font-size: 28px;
+    }
+    }
+// HERO SECTION
+section.hero-section
+  .hero-content
+    h1 About Smart Wallet
+    p
+      | Revolutionizing the way you manage your finances with cutting-edge technology and user-centric design.
+// COMPANY STORY SECTION
+section.story-section
+  .container
+    h2.section-title Our Story
+    .story-grid
+      .story-content
+        h3 Founded with a Vision
+        p
+          | Smart Wallet was founded in 2020 with a simple yet powerful vision: to transform personal finance management through innovative technology and intuitive design.
+        p
+          | We recognized that traditional banking and finance apps were often complex, unintuitive, and didn&apos;t meet the needs of modern users. Our team of passionate entrepreneurs and tech experts set out to change that.
+        p
+          | Today, we serve thousands of satisfied customers worldwide, helping them take control of their financial futures with confidence and ease.
+      .story-image
+        img.story-img(src='/images/Wallet2-2668577_1280.jpg' alt='Smart Wallet Story')
+// MISSION, VISION & VALUES SECTION
+section.mission-section
+  .container
+    h2.section-title Our Core Values
+    .mission-grid
+      .mission-card
+        .mission-icon
+          i.fas.fa-target
+        h3 Our Mission
+        p
+          | To empower individuals with intelligent financial tools that simplify money management and accelerate wealth building.
+      .mission-card
+        .mission-icon
+          i.fas.fa-eye
+        h3 Our Vision
+        p
+          | To be the world&apos;s leading platform for personal finance, trusted by millions for transparency, security, and innovation.
+      .mission-card
+        .mission-icon
+          i.fas.fa-heart
+        h3 Our Values
+        p
+          | Integrity, innovation, and customer-centricity guide every decision we make and every feature we build.
+// TEAM SECTION
+section.team-section
+  .container
+    h2.section-title Meet Our Team
+    .team-grid
+      .team-member
+        .team-image
+          img.team-img(src='/images/Alpha.jpg' alt='Alpha Tshimanga')
+        .team-info
+          h4 Alpha K. Tshimanga
+          .team-position Founder &amp; CEO
+          p.team-description Visionary leader with 15+ years of fintech experience.
+          .team-social
+            a(href='#')
+              i.fab.fa-linkedin
+            a(href='#')
+              i.fab.fa-twitter
+      .team-member
+        .team-image
+          img.team-img(src='/images/Manasseh.jpg' alt='Isaac Tshimanga')
+        .team-info
+          h4 Isaac M. Tshimanga
+          .team-position CTO &amp; Co-Founder
+          p.team-description Tech innovator passionate about building beautiful solutions.
+          .team-social
+            a(href='#')
+              i.fab.fa-linkedin
+            a(href='#')
+              i.fab.fa-twitter
+      .team-member
+        .team-image
+          img.team-img(src='/images/Joshua.jpg' alt='Joshua Tshimanga')
+        .team-info
+          h4 Joshua K. Tshimanga
+          .team-position Head of Product
+          p.team-description Design thinker committed to user experience excellence.
+          .team-social
+            a(href='#')
+              i.fab.fa-linkedin
+            a(href='#')
+              i.fab.fa-twitter
+      .team-member
+        .team-image
+          img.team-img(src='/images/Keren.jpg' alt='Syntiche Tshimanga')
+        .team-info
+          h4 Syntiche K. Tshimanga
+          .team-position Head of Marketing
+          p.team-description Growth specialist focused on building community impact.
+          .team-social
+            a(href='#')
+              i.fab.fa-linkedin
+            a(href='#')
+              i.fab.fa-twitter
+// WHY CHOOSE US SECTION
+section.why-section
+  .container
+    .why-grid
+      .why-image
+        img.why-img(src='/images/Wallet1-2292428_1920.jpg' alt='Why Choose Smart Wallet')
+      .why-content
+        h3 Why Choose Smart Wallet?
+        .why-item
+          .why-check
+            i.fas.fa-check
+          .why-text
+            h4 Bank-Level Security
+            p
+              | Your financial data is encrypted and protected with military-grade security standards.
+        .why-item
+          .why-check
+            i.fas.fa-check
+          .why-text
+            h4 User-Friendly Interface
+            p Intuitive design makes managing your finances effortless and enjoyable.
+        .why-item
+          .why-check
+            i.fas.fa-check
+          .why-text
+            h4 Advanced Analytics
+            p
+              | Get real-time insights and personalized recommendations for better financial decisions.
+        .why-item
+          .why-check
+            i.fas.fa-check
+          .why-text
+            h4 24/7 Customer Support
+            p
+              | Our dedicated team is always available to assist you with any questions or concerns.
+// STATISTICS SECTION
+section.stats-section
+  .container
+    .stats-grid
+      .stat-item
+        h3 50K+
+        p Active Users
+      .stat-item
+        h3 $2B+
+        p Transactions Managed
+      .stat-item
+        h3 98%
+        p Customer Satisfaction
+      .stat-item
+        h3 24/7
+        p Support Available
+// CALL TO ACTION SECTION
+section.cta-section
+  .cta-content
+    h2 Ready to Transform Your Finances?
+    p
+      | Join thousands of satisfied customers who are already managing their money smarter with Smart Wallet.
+    a.cta-button(href='/auth/Subscribe') Get Started Today
+// FOOTER
+footer
+  .footer-content
+    p.footer-text Empowering your financial journey, one transaction at a time.
+    .footer-links
+      a(href='/') Home
+      a(href='/contact') Contact Us
+      a(href='#Services') Services
+      // <a href="#blog">Blog</a>
+      a(href='/policy') Privacy Policy
+      a(href='/terms') Terms &amp; Conditions
+    .footer-copyright
+      p
+        | &copy; 2026 Smart Wallet. All Rights Reserved | Designed with 
+        i.fas.fa-heart(style='color: #ff6b6b;')
+        |  for Modern Finance

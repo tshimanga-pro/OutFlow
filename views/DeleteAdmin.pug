@@ -1,0 +1,31 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  title Delete Admin
+  style.
+    body { font-family: Arial, sans-serif; background: #fff6f6; padding: 24px }
+    .card { max-width:720px; margin:0 auto; background:#fff; padding:20px; border-radius:12px; box-shadow:0 8px 24px rgba(15,23,42,0.06)}
+    .danger { color:#b91c1c; font-weight:800 }
+    .row{display:flex;gap:12px}
+    .actions{margin-top:18px;display:flex;gap:8px}
+    .btn{padding:10px 14px;border-radius:8px;border:none;font-weight:700;cursor:pointer}
+    .btn-delete{background:#dc2626;color:#fff}
+    .btn-cancel{background:#e6eefc;color:#0f172a}
+body
+  .card
+    h2 Delete Admin
+    p Are you sure you want to delete this admin account? This action cannot be undone.
+    dl
+      dt First Name
+      dd= admin.firstName
+      dt Surname
+      dd= admin.surname
+      dt Email
+      dd= admin.email
+      dt Telephone
+      dd= admin.telephone || '-'
+    form(action=`/admin/delete/${admin._id}` method='post')
+      .actions
+        button.btn.btn-delete(type='submit') Confirm Delete
+        a.btn.btn-cancel(href='/admin') Cancel

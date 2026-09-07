@@ -1,0 +1,40 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  title Edit Admin
+  style.
+    body { font-family: Arial, sans-serif; background: #f6f9ff; padding: 24px }
+    .card { max-width:720px; margin:0 auto; background:#fff; padding:20px; border-radius:12px; box-shadow:0 8px 24px rgba(15,23,42,0.06)}
+    label{display:block;margin-top:12px;font-weight:700;color:#0f172a}
+    input, select{width:100%;padding:10px;border-radius:8px;border:1px solid #e6eefc;margin-top:6px}
+    .row{display:flex;gap:12px}
+    .actions{margin-top:18px;display:flex;gap:8px}
+    .btn{padding:10px 14px;border-radius:8px;border:none;font-weight:700;cursor:pointer}
+    .btn-save{background:#1f4ed8;color:#fff}
+    .btn-cancel{background:#e6eefc;color:#0f172a}
+body
+  .card
+    h2 Edit Admin
+    form(action=`/admin/edit/${admin._id}` method='post')
+      .row
+        .col
+          label(for='firstName') First Name
+          input#firstName(type='text' name='firstName' required value=admin.firstName)
+        .col
+          label(for='surname') Surname
+          input#surname(type='text' name='surname' required value=admin.surname)
+      label(for='email') Email
+      input#email(type='email' name='email' readonly value=admin.email)
+      label(for='telephone') Telephone
+      input#telephone(type='text' name='telephone' value=admin.telephone)
+      label(for='password') Password (leave blank to keep current)
+      input#password(type='password' name='password' placeholder='New password (optional)')
+      label(for='role') Role
+      select#role(name='role')
+        option(value='Admin' selected=admin.role==='Admin') Admin
+        option(value='Manager' selected=admin.role==='Manager') Manager
+        option(value='Other' selected=admin.role==='Other') Other
+      .actions
+        button.btn.btn-save(type='submit') Save
+        a.btn.btn-cancel(href='/admin') Cancel

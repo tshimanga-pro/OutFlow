@@ -1,0 +1,282 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  title Budgets
+  style.
+    * {
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    }
+    body {
+    margin: 0;
+    background: linear-gradient(135deg, #eef4ff 0%, #f9fbff 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+    }
+    .budget-card {
+    width: 100%;
+    max-width: 760px;
+    background: white;
+    border-radius: 18px;
+    box-shadow: 0 18px 45px rgba(15, 23, 42, 0.12);
+    padding: 30px;
+    }
+    h2 {
+    margin: 0 0 10px;
+    color: #0f172a;
+    text-align: center;
+    }
+    .subtitle {
+    margin: 0 0 24px;
+    color: #475569;
+    text-align: center;
+    font-size: 15px;
+    }
+    .budget-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    }
+    .budget-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 16px;
+    }
+    .budget-item label {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1f4ed8;
+    }
+    .budget-item .input-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    }
+    .budget-item input {
+    flex: 1 1 auto;
+    width: 100%;
+    min-width: 0;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid #dbeafe;
+    font-size: 14px;
+    }
+    .budget-item select,
+    .budget-item button {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid #dbeafe;
+    font-size: 14px;
+    }
+    .budget-item input:focus,
+    .budget-item select:focus {
+    outline: none;
+    border-color: #1f4ed8;
+    box-shadow: 0 0 0 3px rgba(31, 78, 216, 0.12);
+    }
+    .warning-banner,
+    .success-banner {
+    margin-bottom: 18px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 700;
+    }
+    .warning-banner {
+    background: #fee2e2;
+    color: #991b1b;
+    border-left: 4px solid #dc2626;
+    }
+    .success-banner {
+    background: #dcfce7;
+    color: #166534;
+    border-left: 4px solid #16a34a;
+    }
+    .currency {
+    width: 90px;
+    max-width: 90px;
+    flex-shrink: 0;
+    }
+    .actions {
+    margin-top: 26px;
+    display: flex;
+    justify-content: center;
+    }
+    button {
+    background: linear-gradient(135deg, #1f4ed8, #2563eb);
+    color: white;
+    border: none;
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: 10px;
+    padding: 12px 22px;
+    min-width: 180px;
+    }
+    @media (max-width: 700px) {
+    body {
+    padding: 16px;
+    }
+    .budget-card {
+    padding: 22px 16px;
+    }
+    .budget-grid {
+    grid-template-columns: 1fr;
+    }
+    }
+    @media (max-width: 480px) {
+    .budget-item .input-row {
+    flex-direction: column;
+    }
+    .currency {
+    width: 100%;
+    max-width: 100%;
+    }
+    button {
+    width: 100%;
+    min-width: auto;
+    }
+    }
+.budget-card
+  h2 Monthly Budget Limits
+  p.subtitle Set a monthly limit per category. Leave blank for no limit.
+  if warning
+    .warning-banner= warning
+  if success
+    .success-banner= success
+  form#budgetForm(action='/budgets' method='post' novalidate='')
+    .budget-grid
+      .budget-item
+        label(for='foodLimit') Food
+        .input-row
+          input#foodLimit(type='number' min='0' step='0.01' placeholder='Enter amount' name='foodLimit' value=budgetMap && budgetMap.Food ? budgetMap.Food.limitAmount : '')
+          select.currency(name='foodCurrency' aria-label='Food currency')
+            option(value='UGX' selected=(budgetMap && budgetMap.Food && budgetMap.Food.currency === 'UGX')) UGX
+            option(value='USD' selected=(budgetMap && budgetMap.Food && budgetMap.Food.currency === 'USD')) USD
+            option(value='EUR' selected=(budgetMap && budgetMap.Food && budgetMap.Food.currency === 'EUR')) EUR
+            option(value='KES' selected=(budgetMap && budgetMap.Food && budgetMap.Food.currency === 'KES')) KES
+      .budget-item
+        label(for='transportLimit') Transport
+        .input-row
+          input#transportLimit(type='number' min='0' step='0.01' placeholder='Enter amount' name='transportLimit' value=budgetMap && budgetMap.Transport ? budgetMap.Transport.limitAmount : '')
+          select.currency(name='transportCurrency' aria-label='Transport currency')
+            option(value='UGX' selected=(budgetMap && budgetMap.Transport && budgetMap.Transport.currency === 'UGX')) UGX
+            option(value='USD' selected=(budgetMap && budgetMap.Transport && budgetMap.Transport.currency === 'USD')) USD
+            option(value='EUR' selected=(budgetMap && budgetMap.Transport && budgetMap.Transport.currency === 'EUR')) EUR
+            option(value='KES' selected=(budgetMap && budgetMap.Transport && budgetMap.Transport.currency === 'KES')) KES
+      .budget-item
+        label(for='rentLimit') Rent
+        .input-row
+          input#rentLimit(type='number' min='0' step='0.01' placeholder='Enter amount' name='rentLimit' value=budgetMap && budgetMap.Rent ? budgetMap.Rent.limitAmount : '')
+          select.currency(name='rentCurrency' aria-label='Rent currency')
+            option(value='UGX' selected=(budgetMap && budgetMap.Rent && budgetMap.Rent.currency === 'UGX')) UGX
+            option(value='USD' selected=(budgetMap && budgetMap.Rent && budgetMap.Rent.currency === 'USD')) USD
+            option(value='EUR' selected=(budgetMap && budgetMap.Rent && budgetMap.Rent.currency === 'EUR')) EUR
+            option(value='KES' selected=(budgetMap && budgetMap.Rent && budgetMap.Rent.currency === 'KES')) KES
+      .budget-item
+        label(for='utilityLimit') Utility
+        .input-row
+          input#utilityLimit(type='number' min='0' step='0.01' placeholder='Enter amount' name='utilityLimit' value=budgetMap && budgetMap.Utility ? budgetMap.Utility.limitAmount : '')
+          select.currency(name='utilityCurrency' aria-label='Utility currency')
+            option(value='UGX' selected=(budgetMap && budgetMap.Utility && budgetMap.Utility.currency === 'UGX')) UGX
+            option(value='USD' selected=(budgetMap && budgetMap.Utility && budgetMap.Utility.currency === 'USD')) USD
+            option(value='EUR' selected=(budgetMap && budgetMap.Utility && budgetMap.Utility.currency === 'EUR')) EUR
+            option(value='KES' selected=(budgetMap && budgetMap.Utility && budgetMap.Utility.currency === 'KES')) KES
+      .budget-item
+        label(for='healthcareLimit') Healthcare
+        .input-row
+          input#healthcareLimit(type='number' min='0' step='0.01' placeholder='Enter amount' name='healthcareLimit' value=budgetMap && budgetMap.Healthcare ? budgetMap.Healthcare.limitAmount : '')
+          select.currency(name='healthcareCurrency' aria-label='Healthcare currency')
+            option(value='UGX' selected=(budgetMap && budgetMap.Healthcare && budgetMap.Healthcare.currency === 'UGX')) UGX
+            option(value='USD' selected=(budgetMap && budgetMap.Healthcare && budgetMap.Healthcare.currency === 'USD')) USD
+            option(value='EUR' selected=(budgetMap && budgetMap.Healthcare && budgetMap.Healthcare.currency === 'EUR')) EUR
+            option(value='KES' selected=(budgetMap && budgetMap.Healthcare && budgetMap.Healthcare.currency === 'KES')) KES
+      .budget-item
+        label(for='entertainmentLimit') Entertainment
+        .input-row
+          input#entertainmentLimit(type='number' min='0' step='0.01' placeholder='Enter amount' name='entertainmentLimit' value=budgetMap && budgetMap.Entertainment ? budgetMap.Entertainment.limitAmount : '')
+          select.currency(name='entertainmentCurrency' aria-label='Entertainment currency')
+            option(value='UGX' selected=(budgetMap && budgetMap.Entertainment && budgetMap.Entertainment.currency === 'UGX')) UGX
+            option(value='USD' selected=(budgetMap && budgetMap.Entertainment && budgetMap.Entertainment.currency === 'USD')) USD
+            option(value='EUR' selected=(budgetMap && budgetMap.Entertainment && budgetMap.Entertainment.currency === 'EUR')) EUR
+            option(value='KES' selected=(budgetMap && budgetMap.Entertainment && budgetMap.Entertainment.currency === 'KES')) KES
+      .budget-item
+        label(for='shoppingLimit') Shopping
+        .input-row
+          input#shoppingLimit(type='number' min='0' step='0.01' placeholder='Enter amount' name='shoppingLimit' value=budgetMap && budgetMap.Shopping ? budgetMap.Shopping.limitAmount : '')
+          select.currency(name='shoppingCurrency' aria-label='Shopping currency')
+            option(value='UGX' selected=(budgetMap && budgetMap.Shopping && budgetMap.Shopping.currency === 'UGX')) UGX
+            option(value='USD' selected=(budgetMap && budgetMap.Shopping && budgetMap.Shopping.currency === 'USD')) USD
+            option(value='EUR' selected=(budgetMap && budgetMap.Shopping && budgetMap.Shopping.currency === 'EUR')) EUR
+            option(value='KES' selected=(budgetMap && budgetMap.Shopping && budgetMap.Shopping.currency === 'KES')) KES
+      .budget-item
+        label(for='otherLimit') Other
+        .input-row
+          input#otherLimit(type='number' min='0' step='0.01' placeholder='Enter amount' name='otherLimit' value=budgetMap && budgetMap.Other ? budgetMap.Other.limitAmount : '')
+          select.currency(name='otherCurrency' aria-label='Other currency')
+            option(value='UGX' selected=(budgetMap && budgetMap.Other && budgetMap.Other.currency === 'UGX')) UGX
+            option(value='USD' selected=(budgetMap && budgetMap.Other && budgetMap.Other.currency === 'USD')) USD
+            option(value='EUR' selected=(budgetMap && budgetMap.Other && budgetMap.Other.currency === 'EUR')) EUR
+            option(value='KES' selected=(budgetMap && budgetMap.Other && budgetMap.Other.currency === 'KES')) KES
+    .actions
+      button(type='submit') Save Budget
+script.
+  const budgetForm = document.getElementById('budgetForm');
+  const categories = ['foodLimit', 'transportLimit', 'rentLimit', 'utilityLimit', 'healthcareLimit', 'entertainmentLimit', 'shoppingLimit', 'otherLimit'];
+
+  budgetForm.addEventListener('submit', function (event) {
+    let hasEmptyOrZero = false;
+
+    for (const fieldName of categories) {
+      const input = document.getElementById(fieldName.replace('Limit', 'Limit')) || document.getElementsByName(fieldName)[0];
+      const value = Number((input && input.value) || 0);
+
+      if (!input || input.value.trim() === '' || value <= 0) {
+        hasEmptyOrZero = true;
+        break;
+      }
+    }
+
+    if (hasEmptyOrZero) {
+      event.preventDefault();
+      alert('All category limits must be filled and cannot be zero.');
+    }
+  });
+//- script.
+//-   const queryParams = new URLSearchParams(window.location.search);
+//-   const warning = queryParams.get('warning');
+//-   if (warning) {
+//-     const message = document.createElement('div');
+//-     message.className = 'warning-banner';
+//-     message.textContent = warning;
+//-     document.querySelector('.budget-card').prepend(message);
+//-     setTimeout(() => {
+//-       window.location.href = '/budgets';
+//-     }, 1500);
+//-   }
+
+//-   const budgetForm = document.getElementById('budgetForm');
+//-   budgetForm.addEventListener('submit', function (event) {
+//-   event.preventDefault();
+//-   const limits = {
+//-   Food: document.getElementById('foodLimit').value,
+//-   Transport: document.getElementById('transportLimit').value,
+//-   Rent: document.getElementById('rentLimit').value,
+//-   Utility: document.getElementById('utilityLimit').value,
+//-   Healthcare: document.getElementById('healthcareLimit').value,
+//-   Entertainment: document.getElementById('entertainmentLimit').value,
+//-   Shopping: document.getElementById('shoppingLimit').value,
+//-   Other: document.getElementById('otherLimit').value
+//-   };
+//-   console.log('Monthly budget limits:', limits);
+//-   alert('Monthly budget limits saved successfully!');
+//-   });
+

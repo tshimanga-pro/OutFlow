@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            background: linear-gradient(135deg, #eef4ff 0%, #f9fbff 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .expense-card {
+            width: 100%;
+            max-width: 680px;
+            background: #ffffff;
+            border-radius: 18px;
+            box-shadow: 0 18px 45px rgba(15, 23, 42, 0.12);
+            padding: 30px;
+        }
+
+        .header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            margin: 0;
+            color: #0f172a;
+            text-align: left;
+            flex: 1;
+        }
+
+        .calendar-box {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 6px;
+        }
+
+        .calendar-label {
+            font-size: 12px;
+            color: #475569;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #1f4ed8;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .input-row {
+            display: flex;
+            gap: 12px;
+        }
+
+        input, select, textarea, button {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 10px;
+            border: 1px solid #dbeafe;
+            font-size: 15px;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #1f4ed8;
+            box-shadow: 0 0 0 3px rgba(31, 78, 216, 0.12);
+        }
+
+        .currency {
+            width: 120px;
+            flex-shrink: 0;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        button {
+            background: linear-gradient(135deg, #1f4ed8, #2563eb);
+            color: white;
+            border: none;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        button:hover {
+            transform: translateY(-1px);
+        }
+
+        .total-box {
+            margin-top: 20px;
+            padding: 16px 18px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 700;
+            color: #0f172a;
+            gap: 12px;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 16px;
+            }
+
+            .expense-card {
+                padding: 24px 18px;
+            }
+
+            .header-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .calendar-box {
+                align-items: flex-start;
+                width: 100%;
+            }
+
+            .calendar-box input {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .input-row {
+                flex-direction: column;
+            }
+
+            .currency {
+                width: 100%;
+            }
+
+            .total-box {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="expense-card">
+        <div class="header-row">
+            <h2>Add Expense</h2>
+            <div class="calendar-box">
+                <span class="calendar-label">Review date</span>
+                <input id="reviewDate" type="date" aria-label="Choose date">
+            </div>
+        </div>
+
+        <form id="expenseForm">
+            <div class="form-group">
+                <label for="amount">Amount</label>
+                <div class="input-row">
+                    <input id="amount" type="number" step="0.01" min="0" placeholder="Enter amount" required>
+                    <select id="currency" class="currency" aria-label="Currency">
+                        <option value="UGX">UGX</option>
+                        <option value="USD">USD</option>
+                        <option value="EUR">EUR</option>
+                        <option value="KES">KES</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="category">Category</label>
+                <select id="category" required>
+                    <option value="">Select category</option>
+                    <option value="Food">Food</option>
+                    <option value="Transport">Transport</option>
+                    <option value="Rent">Rent</option>
+                    <option value="Utility">Utility</option>
+                    <option value="Healthcare">Healthcare</option>
+                    <option value="Entertainment">Entertainment</option>
+                    <option value="Shopping">Shopping</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="date">Date</label>
+                <input id="date" type="date" required>
+            </div>
+
+            <div class="form-group">
+                <label for="reason">Reason (optional)</label>
+                <textarea id="reason" placeholder="Add a short note..."></textarea>
+            </div>
+
+            <button type="submit">Submit</button>
+        </form>
+
+        <div class="total-box">
+            <span>Cumulative Total for the Day</span>
+            <span id="totalAmount">0.00 UGX</span>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('expenseForm');
+        const amountInput = document.getElementById('amount');
+        const currencySelect = document.getElementById('currency');
+        const totalAmount = document.getElementById('totalAmount');
+        const reviewDateInput = document.getElementById('reviewDate');
+        const dateInput = document.getElementById('date');
+
+        function getCurrentMonthDate() {
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0');
+            return `${year}-${month}-01`;
+        }
+
+        function formatCurrency(amount, currency) {
+            return new Intl.NumberFormat('en-US', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }).format(amount) + ' ' + currency;
+        }
+
+        function getSelectedDateKey() {
+            return reviewDateInput.value || new Date().toISOString().split('T')[0];
+        }
+
+        const transactions = JSON.parse(localStorage.getItem('expenseTransactions') || '[]');
+
+        function updateDailyTotal() {
+            const selectedDate = getSelectedDateKey();
+            const dateTransactions = transactions.filter(entry => entry.date === selectedDate);
+            const total = dateTransactions.reduce((sum, entry) => sum + Number(entry.amount || 0), 0);
+            const currency = dateTransactions[0]?.currency || currencySelect.value || 'UGX';
+            totalAmount.textContent = formatCurrency(total, currency);
+        }
+
+        const currentMonthDefault = getCurrentMonthDate();
+        reviewDateInput.value = currentMonthDefault;
+        dateInput.valueAsDate = new Date();
+
+        reviewDateInput.addEventListener('change', updateDailyTotal);
+        amountInput.addEventListener('input', () => {
+            const selectedDate = getSelectedDateKey();
+            if (selectedDate) {
+                updateDailyTotal();
+            }
+        });
+        currencySelect.addEventListener('change', updateDailyTotal);
+
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const amount = parseFloat(amountInput.value);
+            const currency = currencySelect.value;
+            const category = document.getElementById('category').value;
+            const date = document.getElementById('date').value;
+            const reason = document.getElementById('reason').value.trim();
+
+            if (!amount || amount <= 0) {
+                alert('Please enter a valid amount.');
+                return;
+            }
+
+            if (!category) {
+                alert('Please select a category.');
+                return;
+            }
+
+            if (!date) {
+                alert('Please select a date.');
+                return;
+            }
+
+            const entry = {
+                amount,
+                currency,
+                category,
+                date,
+                reason: reason || 'No reason provided'
+            };
+
+            transactions.push(entry);
+            localStorage.setItem('expenseTransactions', JSON.stringify(transactions));
+            reviewDateInput.value = date;
+            alert('Expense submitted successfully!');
+            form.reset();
+            dateInput.valueAsDate = new Date();
+            updateDailyTotal();
+        });
+
+        updateDailyTotal();
+    </script>
+</body>
+</html>
