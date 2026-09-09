@@ -171,10 +171,8 @@ head
     .calendar-box
       span.calendar-label Review date
       input#reviewDate(type='date' aria-label='Choose date')
-  if error
-    .error-message.show= error
-  if success
-    .success-message.show= success
+  .error-message(class=error ? 'show' : '')= error || ''
+  .success-message(class=success ? 'show' : '')= success || ''
   form#expenseForm(action='/expensetracker' method='post' novalidate='')
     .form-group
       label(for='amount') Amount
@@ -287,6 +285,6 @@ head
 
       if (budgetLimits[category] !== undefined && amount >= limit) {
         event.preventDefault();
-        showError(`Expense amount must be lower than your ${category} limit (${limit}).`);
+        showError(`Expense amount must be strictly less than your ${category} limit (${limit}).`);
       }
     });

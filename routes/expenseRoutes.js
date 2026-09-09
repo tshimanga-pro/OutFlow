@@ -1,12 +1,13 @@
 const express = require("express");
 const router = express.Router();
 const Expense = require("../models/Expense");
+const Budget = require("../models/Budget");
 const mongoose = require("mongoose");
 const expenseCalculation = require("../utils/expenseCalculation");
 
 router.get("/expensetracker", async (req, res) => {
   if (!req.isAuthenticated() || !req.user) {
-    return res.redirect("/Login");
+    return res.redirect("/auth/Login");
   }
 
   try {
@@ -27,6 +28,12 @@ router.get("/expensetracker", async (req, res) => {
       { $group: { _id: "$currency", total: { $sum: "$amount" } } }
     ]);
 
+    const budgets = await Budget.find({ user: req.user._id }).lean();
+    const budgetLimits = {};
+    budgets.forEach((budget) => {
+      budgetLimits[budget.category] = Number(budget.limitAmount || 0);
+    });
+
     let dailyTotal = 0;
     let dailyCurrency = 'UGX';
     if (totals && totals.length === 1) {
@@ -43,7 +50,7 @@ router.get("/expensetracker", async (req, res) => {
     return res.render("Expenses", {
       error: "",
       success: "",
-      budgetLimits: {},
+      budgetLimits,
       selectedDate: selectedDate.toISOString().split('T')[0],
       dailyTotal,
       dailyCurrency
@@ -113,12 +120,29 @@ router.post("/expensetracker", async (req, res) => {
     const { amount, currency, category, date, reason } = req.body;
     const selectedDate = date ? new Date(date) : new Date();
 
+    if (!String(category || "").trim()) {
+      return res.status(400).render("Expenses", {
+        error: "Please select a category.",
+        success: "",
+        budgetLimits: {}
+      });
+    }
+
     let validatedExpense;
     try {
       validatedExpense = expenseCalculation(category, currency, amount);
     } catch (error) {
       return res.status(400).render("Expenses", {
         error: error.message,
+        success: "",
+        budgetLimits: {}
+      });
+    }
+
+    const budget = await Budget.findOne({ user: req.user._id, category: validatedExpense.category }).lean();
+    if (budget && Number(budget.limitAmount || 0) > 0 && validatedExpense.amount >= Number(budget.limitAmount)) {
+      return res.status(400).render("Expenses", {
+        error: `Expense amount must be strictly less than your ${validatedExpense.category} budget limit (${Number(budget.limitAmount)}).`,
         success: "",
         budgetLimits: {}
       });

@@ -6,7 +6,7 @@ const mongoose = require("mongoose");
 // Summary dashboard for authenticated users
 router.get("/summary", async (req, res) => {
   if (!req.isAuthenticated() || !req.user) {
-    return res.redirect('/Login');
+    return res.redirect('/auth/Login');
   }
 
   try {

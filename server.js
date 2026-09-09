@@ -74,7 +74,11 @@ passport.use("local", Subscribers.createStrategy());
 passport.use("admin-local", AdminRegister.createStrategy());
 
 passport.serializeUser((user, done) => {
-  done(null, user._id);
+  if (!user || !user._id) {
+    return done(new Error("Failed to serialize user into session: missing user._id"));
+  }
+
+  done(null, user._id.toString ? user._id.toString() : user._id);
 });
 
 passport.deserializeUser(async (id, done) => {

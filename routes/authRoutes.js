@@ -148,10 +148,12 @@ router.post("/Login", async (req, res, next) => {
         return res.status(500).render("LogIn", { error: "An error occurred during login." });
       }
 
-      // if (!user) {
-      //   const errorMessage = "Invalid email or password. Provide the correct information, or subscribe.";
-      //   return res.redirect(`/auth/Login?error=${encodeURIComponent(errorMessage)}`);
-      // }
+      if (!user) {
+        const errorMessage = info && info.message
+          ? info.message
+          : "Invalid email or password. Provide the correct information, or subscribe.";
+        return res.redirect(`/auth/Login?error=${encodeURIComponent(errorMessage)}`);
+      }
 
       req.login(user, (loginErr) => {
         if (loginErr) {

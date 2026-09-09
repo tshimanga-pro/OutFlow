@@ -4,7 +4,7 @@ const Expense = require("../models/Expense");
 
 router.get("/expensetracker", (req, res) => {
   if (!req.isAuthenticated() || !req.user) {
-    return res.redirect("/Login");
+    return res.redirect("/auth/Login");
   }
 
   return res.render("Expenses", {
@@ -22,13 +22,12 @@ router.post("/expensetracker", async (req, res, next) => {
       const selectedDate = date ? new Date(date) : new Date();
 
       if (amount === undefined || amount === null || amount === "" || Number.isNaN(parsedAmount) || parsedAmount < 0) {
-        return next ();
-      }
-      res.status(400).render("Expenses", {
+        return res.status(400).render("Expenses", {
           error: "Amount is required and cannot be negative.",
           success: "",
           budgetLimits: {}
         });
+      }
 
       if (!category) {
         return res.status(400).render("Expenses", {
