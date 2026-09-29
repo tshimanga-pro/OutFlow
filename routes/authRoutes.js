@@ -75,19 +75,11 @@ router.post("/Subscribe", async (req, res) => {
       return res.status(400).render("Register", { error: "Email already in use. Please use a different email address." });
     }
 
-    const passwordCheckUser = new Subscriber();
-    await passwordCheckUser.setPassword(trimmedPassword);
-    const existingPassword = await Subscriber.findOne({ password: passwordCheckUser.password });
-    if (existingPassword) {
-      return res.status(400).render("Register", { error: "That password has already been used. Please choose another password." });
-    }
-
     const newSubscriber = new Subscriber({
       firstName: trimmedFirstName,
       surname: trimmedSurname,
       email: trimmedEmail,
-      telephone: trimmedTelephone || "",
-      password: trimmedPassword
+      telephone: trimmedTelephone || ""
     });
 
     await Subscriber.register(newSubscriber, trimmedPassword);

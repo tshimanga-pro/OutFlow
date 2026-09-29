@@ -133,6 +133,20 @@ head
     background: #f59e0b;
     color: #fff;
     }
+    .btn-create {
+    background: var(--success);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+    .btn-create:hover {
+    transform: translateY(-1px);
+    opacity: 0.97;
+    }
     .table-wrap {
     overflow-x: auto;
     border-radius: 18px;
@@ -291,7 +305,9 @@ head
     h3 Registered Subscribers
     if adminFirstName
       p.welcome-inline Welcome back, #{adminFirstName}!
-  p Manage system users and account details.
+  .sub-header
+    p Manage system users and account details.
+    button.btn-create(type='button' onclick="window.location.href='/registeradmin'") Create
   .table-wrap
     table
       thead

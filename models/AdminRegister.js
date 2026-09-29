@@ -44,10 +44,6 @@ const adminregisterSchema = new mongoose.Schema({
     type: String,
     trim: true
   },
-  password: {
-    type: String,
-    required: true
-  },
 });
 
 adminregisterSchema.plugin(passportLocalMongoose, {usernameField: "email"})

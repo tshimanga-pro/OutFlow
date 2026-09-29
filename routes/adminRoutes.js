@@ -51,6 +51,89 @@ router.post("/adminlogin", async (req, res, next) => {
   }
 });
 
+router.get("/registeradmin", async (req, res) => {
+  if (!req.isAuthenticated()) {
+    return res.redirect("/");
+  }
+
+  const user = req.user;
+  if (!user || String(user.role || "").toLowerCase() !== "admin") {
+    return res.redirect("/");
+  }
+
+  return res.render("RegisterAdmin", { error: "", success: "" });
+});
+
+router.post("/registeradmin", async (req, res) => {
+  if (!req.isAuthenticated()) {
+    return res.redirect("/");
+  }
+
+  const user = req.user;
+  if (!user || String(user.role || "").toLowerCase() !== "admin") {
+    return res.redirect("/");
+  }
+
+  try {
+    const { firstName, surname, email, telephone, role, password, confirmPassword } = req.body || {};
+
+    const trimmedFirstName = (firstName || "").trim();
+    const trimmedSurname = (surname || "").trim();
+    const trimmedEmail = (email || "").trim().toLowerCase();
+    const trimmedTelephone = (telephone || "").trim();
+    const trimmedPassword = (password || "").trim();
+    const trimmedConfirmPassword = (confirmPassword || "").trim();
+    const selectedRole = (role || "Admin").trim();
+
+    const namePattern = /^[A-Z][a-zA-Z\s]*$/;
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!trimmedFirstName || !namePattern.test(trimmedFirstName)) {
+      return res.status(400).render("RegisterAdmin", { error: "First Name must start with a capital letter and contain no numbers.", success: "" });
+    }
+
+    if (!trimmedSurname || !namePattern.test(trimmedSurname)) {
+      return res.status(400).render("RegisterAdmin", { error: "Surname must start with a capital letter and contain no numbers.", success: "" });
+    }
+
+    if (!trimmedEmail || !emailPattern.test(trimmedEmail)) {
+      return res.status(400).render("RegisterAdmin", { error: "Email must be valid.", success: "" });
+    }
+
+    if (!trimmedPassword || trimmedPassword.length < 6) {
+      return res.status(400).render("RegisterAdmin", { error: "Password must be at least 6 characters.", success: "" });
+    }
+
+    if (trimmedPassword !== trimmedConfirmPassword) {
+      return res.status(400).render("RegisterAdmin", { error: "Passwords do not match.", success: "" });
+    }
+
+    const existingEmail = await AdminRegister.findOne({ email: trimmedEmail });
+    if (existingEmail) {
+      return res.status(400).render("RegisterAdmin", { error: "Email already in use. Please choose another email.", success: "" });
+    }
+
+    const newAdmin = new AdminRegister({
+      firstName: trimmedFirstName,
+      surname: trimmedSurname,
+      email: trimmedEmail,
+      telephone: trimmedTelephone || "",
+      role: selectedRole
+    });
+
+    await AdminRegister.register(newAdmin, trimmedPassword);
+
+    return res.redirect("/admin");
+  } catch (error) {
+    if (error && error.code === 11000) {
+      return res.status(400).render("RegisterAdmin", { error: "One of the submitted values already exists. Please choose different details.", success: "" });
+    }
+
+    console.error("Admin registration error:", error);
+    return res.status(500).render("RegisterAdmin", { error: "Unable to create the administrator. Please try again.", success: "" });
+  }
+});
+
 router.get("/admin", async (req, res) => {
   if (!req.isAuthenticated()) {
     return res.redirect("/");

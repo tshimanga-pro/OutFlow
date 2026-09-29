@@ -37,10 +37,6 @@ const subscriberSchema = new mongoose.Schema({
     type: String,
     trim: true
   },
-  password: {
-    type: String,
-    required: true
-  },
 });
 
 subscriberSchema.plugin(passportLocalMongoose, {usernameField: "email"})
