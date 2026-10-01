@@ -1,0 +1,185 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  title Services - Smart Wallet
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css')
+  style.
+    * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    }
+    body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f8f9fa;
+    color: #333;
+    line-height: 1.8;
+    }
+    header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 60px 20px;
+    text-align: center;
+    }
+    header h1 {
+    font-size: 42px;
+    margin-bottom: 10px;
+    font-weight: 800;
+    }
+    header p {
+    font-size: 18px;
+    opacity: 0.95;
+    }
+    .container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 60px 20px;
+    background: white;
+    }
+    .section {
+    margin-bottom: 50px;
+    }
+    .section h2 {
+    font-size: 24px;
+    color: #667eea;
+    margin-bottom: 15px;
+    font-weight: 700;
+    border-bottom: 3px solid #667eea;
+    padding-bottom: 10px;
+    }
+    .section h3 {
+    font-size: 18px;
+    color: #333;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-weight: 600;
+    }
+    .section p {
+    margin-bottom: 15px;
+    color: #666;
+    }
+    .section ul {
+    margin-left: 20px;
+    margin-bottom: 15px;
+    }
+    .section li {
+    margin-bottom: 10px;
+    color: #666;
+    }
+    .section ul li::marker {
+    color: #667eea;
+    }
+    .highlight {
+    background: #f0f4f8;
+    padding: 20px;
+    border-left: 4px solid #667eea;
+    border-radius: 5px;
+    margin: 20px 0;
+    }
+    footer {
+    background: linear-gradient(135deg, #2d3561 0%, #1a1f3a 100%);
+    color: white;
+    padding: 40px 20px;
+    text-align: center;
+    margin-top: 60px;
+    }
+    .footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    }
+    .footer-text {
+    font-size: 14px;
+    margin-bottom: 15px;
+    opacity: 0.9;
+    }
+    .footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+    }
+    .footer-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+    transition: opacity 0.3s ease;
+    opacity: 0.8;
+    }
+    .footer-links a:hover {
+    opacity: 1;
+    }
+    .footer-copyright {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 20px;
+    margin-top: 20px;
+    font-size: 12px;
+    opacity: 0.8;
+    }
+    @media (max-width: 768px) {
+    header h1 {
+    font-size: 28px;
+    }
+    .container {
+    padding: 40px 20px;
+    }
+    .section h2 {
+    font-size: 20px;
+    }
+    .footer-links {
+    gap: 15px;
+    }
+    }
+header
+  h1 Smart Wallet Services
+  p Practical tools to help you understand and manage your everyday spending.
+.container
+  .section
+    h2 Expense Tracking
+    p
+      | Record expenses with an amount, date, category, and currency. Add an optional note to remember what a purchase was for,
+      | then review your recorded spending in one place.
+  .section
+    h2 Category Budgets
+    p
+      | Set monthly spending limits for categories such as food, transport, rent, utilities, and shopping. Smart Wallet checks
+      | new expenses against the matching category budget so you can see when a purchase reaches its limit.
+    .highlight
+      strong Plan with clarity:
+      |  enter a positive limit for each category and update it as your needs change.
+  .section
+    h2 Daily Spending Totals
+    p
+      | See the total of your recorded expenses for a selected day. Reviewing daily totals can help you understand where your
+      | money is going and keep day-to-day spending in view.
+  .section
+    h2 Spending Summaries
+    p
+      | Review your expenses by month and category to spot patterns over time. Use the summary alongside your budgets to make
+      | more informed choices about your spending.
+  .section
+    h2 Your Account
+    p
+      | Create an account to keep your expense records and budgets associated with your profile. Sign in to return to your
+      | personal tracking tools.
+  .section
+    h2 Get Started
+    p
+      | Sign in to start recording expenses, or create an account to begin organizing your personal finances with Smart Wallet.
+    .highlight
+      a(href='/auth/Login') Sign in
+      |  or
+      a(href='/auth/Subscribe')  create an account.
+footer
+  .footer-content
+    p.footer-text Empowering your financial journey, one transaction at a time.
+    .footer-links
+      a(href='/') Home
+      a(href='/about') About Us
+      a(href='/contact') Contact Us
+      a(href='/services') Services
+      a(href='/policy') Privacy Policy
+      a(href='/terms') Terms &amp; Conditions
+    .footer-copyright
+      p &copy; 2026 Smart Wallet. All Rights Reserved | Designed with &#x2764; for Modern Finance

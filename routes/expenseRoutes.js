@@ -140,9 +140,18 @@ router.post("/expensetracker", async (req, res) => {
     }
 
     const budget = await Budget.findOne({ user: req.user._id, category: validatedExpense.category }).lean();
-    if (budget && Number(budget.limitAmount || 0) > 0 && validatedExpense.amount >= Number(budget.limitAmount)) {
+    const budgetLimit = Number(budget && budget.limitAmount);
+    if (!budget || !Number.isFinite(budgetLimit) || budgetLimit <= 0) {
       return res.status(400).render("Expenses", {
-        error: `Expense amount must be strictly less than your ${validatedExpense.category} budget limit (${Number(budget.limitAmount)}).`,
+        error: `Set a budget greater than zero for ${validatedExpense.category} before recording an expense.`,
+        success: "",
+        budgetLimits: {}
+      });
+    }
+
+    if (validatedExpense.amount >= budgetLimit) {
+      return res.status(400).render("Expenses", {
+        error: `Expense amount must be strictly less than your ${validatedExpense.category} budget limit (${budgetLimit}).`,
         success: "",
         budgetLimits: {}
       });

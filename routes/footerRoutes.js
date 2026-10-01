@@ -18,5 +18,8 @@ router.get("/policy", (req, res) => {
   res.render("PrivacyPolicy");
 });
 
+router.get("/services", (req, res) => {
+  res.render("Services");
+});
 
 module.exports = router; //its critical to have this line inorder to import the files
