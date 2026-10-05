@@ -109,7 +109,7 @@ router.post("/logout", (req, res, next) => {
       }
 
       res.clearCookie("connect.sid");
-      return res.redirect("/auth/Login");
+      return res.redirect("/");
     });
   });
 });

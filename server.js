@@ -2,6 +2,7 @@
 const express = require("express");
 const path = require("path");
 const mongoose = require("mongoose");
+const { MongoStore } = require('connect-mongo');
 const expressSession = require('express-session');
 const passport = require('passport');
 
@@ -25,7 +26,8 @@ const adminRoutes = require("./routes/adminRoutes");
 
 // 2.Instantiations
 const app = express();
-const PORT = 3007 ;
+const PORT = process.env.PORT || 3007;
+// const PORT = 3007 ;
 
 // 3.Configurations
 //Mongodb settings- setting up connections to the database.
@@ -53,6 +55,12 @@ app.use(expressSession({
   secret: process.env.SECRET,
   resave: false,
   saveUninitialized: false
+}));
+app.use(expressSession({
+  secret: process.env.SECRET,
+  resave: false,
+  saveUninitialized: false,
+  store: MongoStore.create({ mongoUrl: process.env.DB })
 }));
 
 // Serve favicon if generated; fall back to logo
