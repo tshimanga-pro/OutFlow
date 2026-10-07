@@ -70,6 +70,18 @@ head
     padding: 8px 12px;
     font-size: 14px;
     }
+    .print-btn {
+    border: none;
+    border-radius: 10px;
+    padding: 10px 16px;
+    background: #1f4ed8;
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+    }
+    .print-btn:hover {
+    background: #1539a7;
+    }
     .stats-grid {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -176,6 +188,27 @@ head
     display: none;
     }
     }
+    @media print {
+    body {
+    padding: 0;
+    background: white;
+    }
+    .summary-container {
+    max-width: none;
+    }
+    .topbar,
+    .print-btn {
+    display: none;
+    }
+    .stats-grid,
+    .content-grid {
+    break-inside: avoid;
+    }
+    .panel,
+    .stat-card {
+    box-shadow: none;
+    }
+    }
 .summary-container
   .topbar
     .brand
@@ -184,6 +217,7 @@ head
     .month-picker
       label(for='monthInput') Month
       input#monthInput(type='month')
+      button.print-btn(type='button' onclick='window.print()') Print
   h3 Monthly Expense Summary
   .stats-grid
     .stat-card

@@ -84,16 +84,12 @@ router.post("/budgets", async (req, res) => {
         Budget.findOneAndUpdate(
           { user: entry.user, category: entry.category },
           entry,
-          { upsert: true, new: true, setDefaultsOnInsert: true }
+          { upsert: true, returnDocument: 'after', setDefaultsOnInsert: true }
         )
       )
     );
 
-    return res.status(200).render("Budgets", {
-      warning: "",
-      success: "Budget limits saved successfully.",
-      budgetMap: {}
-    });
+    return res.redirect(`/menu?success=${encodeURIComponent("Budget limits saved successfully.")}`);
   } catch (error) {
     console.error("Budget save error:", error);
     return res.status(500).render("Budgets", {

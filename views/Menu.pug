@@ -84,6 +84,15 @@ head
     font-weight: 700;
     color: var(--text);
     }
+    .success-message {
+    margin: 0 0 20px;
+    padding: 14px 18px;
+    border-radius: 12px;
+    background: var(--success-soft);
+    color: var(--success);
+    font-weight: 700;
+    text-align: center;
+    }
     .logout-btn {
     border: none;
     background: var(--primary);
@@ -206,6 +215,8 @@ head
         .welcome Welcome
         #userName.user-name User
       button#logoutBtn.logout-btn(type='button') Log out
+  if success
+    .success-message= success
   section.hero
     h2 Choose your workspace
     p

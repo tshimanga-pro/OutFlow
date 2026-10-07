@@ -11,8 +11,9 @@ router.get("/menu", (req, res) => {
   const loggedInUser = user.firstName
     ? `${user.firstName} ${user.surname || ""}`.trim()
     : (user.email || "User");
+  const success = req.query.success || "";
 
-  res.render("Menu", { loggedInUser });
+  res.render("Menu", { loggedInUser, success });
 });
 
 module.exports = router; //its critical to have this line inorder to import the files
